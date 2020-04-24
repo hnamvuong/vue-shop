@@ -1,5 +1,6 @@
 <template>
     <div class="home">
+        <Navbar></Navbar>
         <Hero />
         <Products />
         <div class="container h-100">

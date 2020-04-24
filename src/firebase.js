@@ -1,13 +1,18 @@
 import firebase from 'firebase';
+import 'firebase/firestore';
 // Your web app's Firebase configuration
-var firebaseConfig = {
-    apiKey: "AIzaSyCH5nF7PFlrY9Dcz8sGcZRX8cwt0-yzQtM",
-    authDomain: "vue-shop-83a7f.firebaseapp.com",
-    databaseURL: "https://vue-shop-83a7f.firebaseio.com",
-    projectId: "vue-shop-83a7f",
-    storageBucket: "vue-shop-83a7f.appspot.com",
-    messagingSenderId: "810782361306",
-    appId: "1:810782361306:web:89557fb6689de39f1b47e3",
-    measurementId: "G-HHHTGC3VHT"
-};
-export const fb = firebase.initializeApp(firebaseConfig);
+const firebaseConfig = {
+    apiKey: "AIzaSyAn5fYNM4VgcEE8OB5p91FaIrEZi0QQGww",
+    authDomain: "vue-shop-d6cec.firebaseapp.com",
+    databaseURL: "https://vue-shop-d6cec.firebaseio.com",
+    projectId: "vue-shop-d6cec",
+    storageBucket: "vue-shop-d6cec.appspot.com",
+    messagingSenderId: "872044389395",
+    appId: "1:872044389395:web:530f3537c7d75326714be6",
+    measurementId: "G-434S5Z0HB5"
+  };
+const fb = firebase.initializeApp(firebaseConfig);
+
+const db = firebase.firestore();
+
+export {fb,db}

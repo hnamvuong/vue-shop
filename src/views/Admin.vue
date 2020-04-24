@@ -16,7 +16,7 @@
                     <!-- sidebar-header  -->
                     <div class="sidebar-item sidebar-header">
                         <div class="user-pic">
-                            <img class="img-responsive img-rounded" src="img/user.png" alt="User picture">
+                            <img class="img-responsive img-rounded" src="/img/user.png" alt="User picture">
                         </div>
                         <div class="user-info">
                             <span class="user-name">Jhon
@@ -49,22 +49,22 @@
                                 <span>Menu</span>
                             </li>
                             <li>
-                                <a href="#">
+                                <router-link to="/admin/overview">
                                     <i class="fa fa-chart-line"></i>
                                     <span>Overview</span>
-                                </a>
+                                </router-link>
                             </li>
                             <li>
-                                <a href="#">
+                                <router-link to="/admin/products">
                                     <i class="fab fa-amazon"></i>
                                     <span>Products</span>
-                                </a>
+                                </router-link>
                             </li>
                             <li>
-                                <a href="#">
+                                <router-link to="/admin/orders">
                                     <i class="fa fa-shopping-cart"></i>
                                     <span>Orders</span>
-                                </a>
+                                </router-link>
                             </li>
                             <li>
                                 <a href="#">
@@ -80,16 +80,7 @@
             </nav>
             <!-- sidebar-content  -->
             <main class="page-content">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="form-group col-md-12">
-                            <h2>Sidebar template</h2>
-                            <p>This is a responsive sidebar template with dropdown menu based on bootstrap 4 framework.
-                            </p>
-
-                        </div>
-                    </div>
-                </div>
+                <router-view />
             </main>
             <!-- page-content" -->
         </div>

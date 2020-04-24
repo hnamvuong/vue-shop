@@ -5,10 +5,13 @@ import Admin from './views/Admin.vue'
 import Overview from './views/Overview.vue'
 import Products from './views/Products.vue'
 import Orders from './views/Orders.vue'
+import {
+    fb
+} from './firebase'
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
     mode: 'history',
     base: process.env.BASE_URL,
     routes: [{
@@ -20,23 +23,25 @@ export default new Router({
             path: "/admin",
             name: "admin",
             component: Admin,
-            children:[
-                {
-                  path: "overview",
-                  name: "overview",
-                  component: Overview
+            meta: {
+                requiresAuth: true
+            },
+            children: [{
+                    path: "overview",
+                    name: "overview",
+                    component: Overview
                 },
                 {
-                  path: "products",
-                  name: "products",
-                  component: Products
+                    path: "products",
+                    name: "products",
+                    component: Products
                 },
                 {
-                  path: "orders",
-                  name: "orders",
-                  component: Orders
+                    path: "orders",
+                    name: "orders",
+                    component: Orders
                 }
-              ]
+            ]
         },
         {
             path: "/about",
@@ -48,4 +53,18 @@ export default new Router({
                 import( /* webpackChunkName: "about" */ "./views/About.vue")
         }
     ]
-})
+});
+
+router.beforeEach((to, from, next) => {
+    const requiresAuth = to.matched.some(x => x.meta.requiresAuth)
+    const currentUser = fb.auth().currentUser
+    if (requiresAuth && !currentUser) {
+        next('/')
+    } else if (requiresAuth && currentUser) {
+        next()
+    } else {
+        next() // make sure to always call next()!
+    }
+});
+
+export default router;

@@ -2,7 +2,7 @@
     <div class="hello">
         <nav class="navbar custom-nav fixed-top navbar-expand-lg navbar-light bg-light">
             <div class="container">
-                <a class="navbar-brand" href="#">Vue Shop</a>
+                <router-link class="navbar-brand" to="/">Vue Shop</router-link>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -13,6 +13,9 @@
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
                             <router-link to="/home" class="nav-link">Home</router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link to="/products" class="nav-link" href="#">Products</router-link>
                         </li>
                         <li class="nav-item">
                             <router-link to="/about" class="nav-link" href="#">About</router-link>

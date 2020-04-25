@@ -3,6 +3,17 @@ import App from './App.vue'
 import router from './router'
 import jQuery from 'jquery'
 import {fb} from './firebase'
+import VueFirestore from 'vue-firestore'
+import Swal from 'sweetalert2'
+
+require('firebase/firestore');
+
+Vue.use(VueFirestore, {
+    key: 'id',         // the name of the property. Default is '.key'.
+    enumerable: true  //  whether it is enumerable or not. Default is true.
+});
+
+Vue.use(VueFirestore);
 
 window.$ = window.jQuery = jQuery;
 
@@ -10,11 +21,24 @@ import 'popper.js'
 import 'bootstrap'
 import './assets/app.scss'
 
-Vue.component('Navbar', require('./components/Navbar.vue').default)
+// window.Swal = Swal;
+Vue.prototype.Swal = Swal;
 
-Vue.config.productionTip = false
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000
+});
 
-let app = ''
+// window.Toast = Toast;
+Vue.prototype.Toast = Toast;
+
+Vue.component('Navbar', require('./components/Navbar.vue').default);
+
+Vue.config.productionTip = false;
+
+let app = '';
 fb.auth().onAuthStateChanged(function() {
     if (!app) { 
         new Vue({

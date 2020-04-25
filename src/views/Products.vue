@@ -86,12 +86,13 @@
                                            class="form-control">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" placeholder="Product tags" v-model="product.tag"
+                                    <input type="text" @keyup.188="addTag" placeholder="Product tags"
+                                           v-model="tag"
                                            class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="product_image">Product Images</label>
-                                    <input type="file" @change="uploadImage()" class="form-control">
+                                    <input type="file" @change="uploadImage" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -113,7 +114,7 @@
 
 <script>
     import {VueEditor} from "vue2-editor";
-    import {db} from '../firebase';
+    import {fb, db} from '../firebase';
     import $ from 'jquery';
 
     export default {
@@ -131,11 +132,12 @@
                     name: '',
                     description: '',
                     price: '',
-                    tag: '',
+                    tags: [],
                     image: ''
                 },
                 activeItem: '',
-                modal: ''
+                modal: '',
+                tag: ''
             }
         },
         firestore() {
@@ -144,8 +146,26 @@
             }
         },
         methods: {
-            uploadImage() {
+            addTag() {
+                this.product.tags.push(this.tag);
+                this.tag = "";
+            },
+            uploadImage(e){
+                let file = e.target.files[0];
+                var storageRef = fb.storage().ref('products/'+ file.name);
+                let uploadTask  = storageRef.put(file);
+                uploadTask.on('state_changed', () => {
 
+                }, () => {
+                    // Handle unsuccessful uploads
+                }, () => {
+                    // Handle successful uploads on complete
+                    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                    uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                        this.product.image = downloadURL;
+                        console.log('File available at', downloadURL);
+                    });
+                });
             },
             addNew() {
                 this.modal = 'new';

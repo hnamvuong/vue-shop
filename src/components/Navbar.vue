@@ -4,15 +4,16 @@
             <div class="container">
                 <router-link class="navbar-brand" to="/">Vue Shop</router-link>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <router-link to="/home" class="nav-link">Home</router-link>
+                            <router-link to="/" class="nav-link">Home</router-link>
                         </li>
                         <li class="nav-item">
                             <router-link to="/products" class="nav-link" href="#">Products</router-link>
@@ -24,7 +25,10 @@
                     </ul>
                     <form class="form-inline my-2 my-lg-0">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                        <a class="btn btn-outline-success my-2 my-sm-0" data-toggle="modal" data-target="#login">Get Start</a>
+                        <a class="btn btn-outline-success my-2 my-sm-0" data-toggle="modal" data-target="#login">Get
+                            Start</a>
+                        <a class="btn btn-outline-info my-2 my-sm-0" data-toggle="modal"
+                           data-target="#miniCart">Cart</a>
                     </form>
                 </div>
 
@@ -40,18 +44,16 @@
         props: {
             msg: String
         },
-        components: {
-            
-        }
+        components: {}
     };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-    @media (min-width: 992px) { 
-    .navbar.custom-nav{
-        top:16px;
-        background-color: transparent !important;
+    @media (min-width: 992px) {
+        .navbar.custom-nav {
+            top: 16px;
+            background-color: transparent !important;
+        }
     }
-   }
 </style>

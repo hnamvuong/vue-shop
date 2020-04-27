@@ -14,7 +14,7 @@
                     </div>
                     <div class="modal-body">
                         <ul>
-                            <li v-for="item in this.$store.state.cart" class="media" :key="item">
+                            <li v-for="(item, index) in this.$store.state.cart" class="media" :key="index">
                                 <img :src="item.productImage" width="80px" class="align-self-center mr-3" alt="">
                                 <div class="media-body">
                                     <h5 class="mt-0">{{item.productName}}</h5>
@@ -26,7 +26,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Continue Shopping</button>
-                        <button type="button" class="btn btn-primary">Checkout</button>
+                        <button type="button" class="btn btn-primary" @click="checkout">Checkout</button>
                     </div>
                 </div>
             </div>
@@ -35,8 +35,16 @@
 </template>
 
 <script>
+    import $ from 'jquery';
+
     export default {
-        name: "MiniCart"
+        name: "MiniCart",
+        methods: {
+            checkout() {
+                $('#miniCart').modal('hide');
+                this.$router.push('/checkout');
+            }
+        }
     }
 </script>
 

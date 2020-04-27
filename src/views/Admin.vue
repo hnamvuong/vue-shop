@@ -22,7 +22,7 @@
                             <span class="user-name">Jhon
                                 <strong>Smith</strong>
                             </span>
-                            <span class="user-role">Administrator</span>
+                            <span class="user-role">{{email}}</span>
                             <span class="user-status">
                                 <i class="fa fa-circle"></i>
                                 <span>Online</span>
@@ -102,6 +102,12 @@
 
     export default {
         name: "admin",
+        data() {
+              return {
+                  name: '',
+                  email: ''
+              }
+        },
         components: {
             // Hero
         },
@@ -118,6 +124,10 @@
                     console.log(err);
                 });
             }
+        },
+        created() {
+            var user = fb.auth().currentUser;
+            this.email = user.email;
         }
     };
 </script>

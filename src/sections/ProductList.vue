@@ -5,12 +5,16 @@
             <div class="row">
                 <div class="col-md-4" v-for="(product, index) in products" :key="index">
                     <div class="card product-item">
-                        <img src="/img/products/product1.jpg" class="card-img-top" alt="...">
+                        <carousel :perPage="1">
+                            <slide v-for="(image, number) in product.images" :key="number">
+                                <img :src="image" class="card-img-top" alt="..." width="250px" height="300px">
+                            </slide>
+                        </carousel>
                         <div class="card-body">
-                            <h5 class="card-title">{{product.name}}</h5>
-                            <p class="card-text">
-                                {{ product.description }}
-                            </p>
+                            <div class="d-flex justify-content-between">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <h5 class="card-priceS">{{ product.price | currency }}</h5>
+                            </div>
                             <a href="#" class="btn btn-primary">Add to Cart</a>
                         </div>
                     </div>

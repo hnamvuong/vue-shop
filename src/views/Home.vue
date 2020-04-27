@@ -20,6 +20,7 @@
             </div>
         </div>
         <login></login>
+        <mini-cart></mini-cart>
     </div>
 </template>
 

@@ -89,10 +89,24 @@
                                     <input type="text" @keyup.188="addTag" placeholder="Product tags"
                                            v-model="tag"
                                            class="form-control">
+                                    <div class="d-flex">
+                                        <p v-for="tag in product.tags" :key="tag">
+                                            <span class="p-1">{{tag}}</span>
+                                        </p>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="product_image">Product Images</label>
                                     <input type="file" @change="uploadImage" class="form-control">
+                                </div>
+                                <div class="form-group d-flex">
+                                    <div class="p-1" v-for="(image, index) in product.images" :key="index">
+                                        <div class="img-wrapp">
+                                            <img :src="image" alt="Image Product" width="80px">
+                                            <span class="delete-img btn-danger"
+                                                  @click="deleteImage(image, index)">X</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -133,7 +147,7 @@
                     description: '',
                     price: '',
                     tags: [],
-                    image: ''
+                    images: []
                 },
                 activeItem: '',
                 modal: '',
@@ -146,26 +160,37 @@
             }
         },
         methods: {
+            deleteImage(img, index) {
+                let image = fb.storage().refFromURL(img);
+                this.product.images.splice(index, 1);
+                image.delete().then(function () {
+                    console.log('Image deleted');
+                }).catch(function () {
+                    console.log('an error occurred');
+                });
+            },
             addTag() {
                 this.product.tags.push(this.tag);
                 this.tag = "";
             },
-            uploadImage(e){
-                let file = e.target.files[0];
-                var storageRef = fb.storage().ref('products/'+ file.name);
-                let uploadTask  = storageRef.put(file);
-                uploadTask.on('state_changed', () => {
+            uploadImage(e) {
+                if (e.target.files[0]) {
+                    let file = e.target.files[0];
+                    var storageRef = fb.storage().ref('products/' + file.name);
+                    let uploadTask = storageRef.put(file);
+                    uploadTask.on('state_changed', () => {
 
-                }, () => {
-                    // Handle unsuccessful uploads
-                }, () => {
-                    // Handle successful uploads on complete
-                    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-                    uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                        this.product.image = downloadURL;
-                        console.log('File available at', downloadURL);
+                    }, () => {
+                        // Handle unsuccessful uploads
+                    }, () => {
+                        // Handle successful uploads on complete
+                        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                            console.log('File available at', downloadURL);
+                            this.product.images.push(downloadURL);
+                        });
                     });
-                });
+                }
             },
             addNew() {
                 this.modal = 'new';
@@ -224,4 +249,17 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+    .img-wrapp {
+        position: relative;
+    }
+
+    .img-wrapp span.delete-img {
+        position: absolute;
+        top: -14px;
+        left: -2px;
+    }
+
+    .img-wrapp span.delete-img:hover {
+        cursor: pointer;
+    }
 </style>

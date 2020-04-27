@@ -1,23 +1,23 @@
 <template>
-    <div class="products">
+    <div class="profile">
         <div class="container">
             <div class="intro h-100">
                 <div class="row h-100 justify-content-center align-items-center">
                     <div class="col-md-6">
-                        <h3>Products Page</h3>
+                        <h3>Orders Page</h3>
                         <p>
                             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde, ducimus.
                         </p>
                     </div>
                     <div class="col-md-6">
-                        <img src="/img/svg/products.svg" alt="" class="img-fluid">
+                        <img src="/img/svg/orders.svg" alt="" class="img-fluid">
                     </div>
                 </div>
             </div>
             <hr>
             <div class="product-test">
-                <h3 class="d-inline-block">Products list</h3>
-                <button @click="addNew" class="btn btn-success float-right">Add Product</button>
+                <h3 class="d-inline-block">Orders list</h3>
+                <button @click="addNew" class="btn btn-success float-right">Add Order</button>
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
@@ -132,7 +132,7 @@
     import $ from 'jquery';
 
     export default {
-        name: "Products",
+        name: "Profile",
         components: {
             VueEditor
         },

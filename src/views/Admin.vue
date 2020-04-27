@@ -19,8 +19,8 @@
                             <img class="img-responsive img-rounded" src="/img/user.png" alt="User picture">
                         </div>
                         <div class="user-info">
-                            <span class="user-name">Jhon
-                                <strong>Smith</strong>
+                            <span class="user-name">
+                                <strong>{{profile.name}}</strong>
                             </span>
                             <span class="user-role">{{email}}</span>
                             <span class="user-status">
@@ -86,7 +86,7 @@
             </nav>
             <!-- sidebar-content  -->
             <main class="page-content">
-                <router-view />
+                <router-view/>
             </main>
             <!-- page-content" -->
         </div>
@@ -98,18 +98,24 @@
     // @ is an alias to /src
     // import Hero from "@/components/Hero.vue";
     import $ from 'jquery';
-    import {fb} from '../firebase';
+    import {db, fb} from '../firebase';
 
     export default {
         name: "admin",
         data() {
-              return {
-                  name: '',
-                  email: ''
-              }
+            return {
+                name: '',
+                email: ''
+            }
         },
         components: {
             // Hero
+        },
+        firestore() {
+            const user = fb.auth().currentUser;
+            return {
+                profile: db.collection('profiles').doc(user.uid),
+            }
         },
         methods: {
             closeMenu() {
@@ -117,12 +123,12 @@
             },
             logout() {
                 fb.auth().signOut()
-                .then(() => {
-                    this.$router.replace('/');
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
+                    .then(() => {
+                        this.$router.replace('/');
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
             }
         },
         created() {

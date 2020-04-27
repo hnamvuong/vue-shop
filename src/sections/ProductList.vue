@@ -15,7 +15,12 @@
                                 <h5 class="card-title">{{ product.name }}</h5>
                                 <h5 class="card-priceS">{{ product.price | currency }}</h5>
                             </div>
-                            <a href="#" class="btn btn-primary">Add to Cart</a>
+                            <add-to-cart
+                                    :product-image="getImage(product.images)"
+                                    :product-id="product.id"
+                                    :price="product.price"
+                                    :name="product.name">
+                            </add-to-cart>
                         </div>
                     </div>
                 </div>
@@ -39,6 +44,11 @@
                 products: db.collection('products'),
             }
         },
+        methods: {
+            getImage(images) {
+                return images[0];
+            }
+        }
     }
 </script>
 

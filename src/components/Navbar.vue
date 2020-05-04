@@ -28,7 +28,7 @@
                         <a class="btn btn-outline-success my-2 my-sm-0 mx-2" data-toggle="modal" data-target="#login">Get
                             Start</a>
                         <a class="btn btn-outline-info my-2 my-sm-0 mx-2" data-toggle="modal"
-                           data-target="#miniCart">Cart</a>
+                           data-target="#miniCart"><i class="fas fa-cart-plus"></i></a>
                     </form>
                 </div>
 

@@ -1,73 +1,101 @@
 <template>
-    <div class="chekout">
+    <div class="checkout">
         <Navbar></Navbar>
         <div class="container mt-5 pt-5">
             <div class="row">
-                <table class="table table-borderless">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th scope="col">Items</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Price</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="(item, index) in this.$store.state.cart" :key="index">
-                        <td>
-                            <span @click="$store.commit('removeFromCart',item)" class="btn btn-danger remove-item">Delete</span>
-                        </td>
-                        <td>
-                            <img :src="item.productImage" alt style="width:100px">
-                            {{item.productName}}
-                        </td>
-                        <td style="width: 180px">
-                            <div class="center">
-                                <div class="input-group">
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-danger"
-                                                @click="decreaseQty(item.productId)">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                    </span>
-                                    <input type="text" :value="item.productQuantity"
-                                           class="form-control input-number text-center">
-                                    <span class="input-group-btn">
-                                          <button type="button" class="btn btn-success"
-                                                  @click="increaseQty(item.productId)">
-                                            <i class="fas fa-plus"></i>
-                                          </button>
-                                        </span>
-                                </div>
+                <div class="col-md-8">
+                    <h4 class="py-4">Checkout page</h4>
+                    <ul>
+                        <li v-for="(item, index) in this.$store.state.cart" class="media" :key="index">
+                            <img :src="item.productImage" width="80px" class="align-self-center mr-3" alt="">
+                            <div class="media-body">
+                                <h5 class="mt-0">{{item.productName}}
+                                    <span class='btn border-danger float-right remove-item' @click="$store.commit('removeFromCart',item)">X</span>
+                                </h5>
+                                <p class="mt-0">{{item.productPrice | currency}}</p>
+                                <p class="mt-0">Quantity : {{item.productQuantity }}</p>
                             </div>
-                        </td>
-                        <td>
-                            {{item.productPrice}}
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <p>
+                        Total Price : {{ this.$store.getters.totalPrice | currency }}
+                    </p>
+                    <card class='stripe-card'
+                          :class='{ complete }'
+                          stripe='pk_test_XXXXXXXXXXXXXXXXXXXXXXXX'
+                          :options='stripeOptions'
+                          @change='complete = $event.complete'/>
+                    <button class='pay-with-stripe btn btn-primary mt-4' @click='pay' :disabled='!complete'>Pay with
+                        credit card
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import {Card, createToken} from 'vue-stripe-elements-plus';
+
     export default {
-        name: "Checkout",
-        methods: {
-            increaseQty(id) {
-                this.$store.commit('increment', id)
-            },
-            decreaseQty(id) {
-                this.$store.commit('decrement', id)
+        data() {
+            return {
+                complete: false,
+                stripeOptions: {
+                    // see https://stripe.com/docs/stripe.js#element-options for details
+                }
             }
         },
+        components: {Card},
+        methods: {
+            pay() {
+                // createToken returns a Promise which resolves in a result object with
+                // either a token or an error key.
+                // See https://stripe.com/docs/api#tokens for the token object.
+                // See https://stripe.com/docs/api#errors for the error object.
+                // More general https://stripe.com/docs/stripe.js#stripe-create-token.
+                createToken().then(data => console.log(data.token))
+            }
+        }
     }
 </script>
 
-<style scoped lang="scss">
-    .center {
-        margin: 40px auto;
+
+<style>
+    /**
+     * The CSS shown here will not be introduced in the Quickstart guide, but shows
+     * how you can use CSS to style your Element's container.
+     */
+    .stripe-card {
+        width: 300px;
+        border: 1px solid grey;
+    }
+    .stripe-card.complete {
+        border-color: green;
+    }
+    .StripeElement {
+        box-sizing: border-box;
+        height: 40px;
+        padding: 10px 12px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        background-color: white;
+        box-shadow: 0 1px 3px 0 #e6ebf1;
+        -webkit-transition: box-shadow 150ms ease;
+        transition: box-shadow 150ms ease;
+    }
+
+    .StripeElement--focus {
+        box-shadow: 0 1px 3px 0 #cfd7df;
+    }
+
+    .StripeElement--invalid {
+        border-color: #fa755a;
+    }
+
+    .StripeElement--webkit-autofill {
+        background-color: #fefde5 !important;
     }
 </style>
